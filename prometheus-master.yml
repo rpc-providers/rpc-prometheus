@@ -79,3 +79,16 @@ scrape_configs:
       - targets:
         - blockops-rpc-prometheus.blockops.network:443
     scheme: https
+# onfinality
+  - job_name: "onfinality"
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: "/federate"
+    scheme: https
+    params:
+      "match[]":
+        - '{job="onfinality"}'
+    static_configs:
+      - targets: ['rpc-prometheus-eu.onfinality.io']
+      - targets: ['rpc-prometheus-hm.onfinality.io']
+      - targets: ['rpc-prometheus-nv.onfinality.io']
