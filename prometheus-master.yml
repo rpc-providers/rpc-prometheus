@@ -110,7 +110,7 @@ scrape_configs:
       - targets:
         - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
         labels:
-          __metrics_path__: /bridehub-kusama
+          __metrics_path__: /bridgehub-kusama
       - targets:
         - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
         labels:
