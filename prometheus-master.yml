@@ -2,6 +2,13 @@ global:
   scrape_interval: 5m
   evaluation_interval: 5m
 
+remote_write:
+  - url: http://localhost:9009/api/v1/push
+    write_relabel_configs:
+      - source_labels: [__name__]
+        regex: (^rpc_.*|substrate_rpc_calls_started)
+        action: keep
+
 rule_files:
   - "rules.yml"
 
@@ -21,74 +28,107 @@ scrape_configs:
   - job_name: "prometheus"
     static_configs:
       - targets: ["localhost:9090"]
-# Job stakeworld        
   - job_name: "stakeworld"
     scrape_interval: 15s
     honor_labels: true
     metrics_path: "/federate"
     params:
       "match[]":
-        - '{job="stakeworld"}'
+        - '{job="stakeworld", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets:
         - monitor.stakeworld.io:9091
-# Job GlobalStake        
   - job_name: "GlobalStake"
     scrape_interval: 15s
     honor_labels: true
     metrics_path: "/federate"
     params:
       "match[]":
-        - '{job="GlobalStake"}'
+        - '{job="GlobalStake", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets:
         - '216.66.9.45:9090'
-  # Job provider ...
   - job_name: "Helixstreet"
     scrape_interval: 15s
     honor_labels: true
     metrics_path: "/federate"
     params:
       "match[]":
-        - '{job="Helixstreet"}'
+        - '{job="Helixstreet", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets:
         - 'rpc-prometheus.helixstreet.io:9090'
-  # Job Dwellir
   - job_name: "Dwellir"
     scrape_interval: 15s
     honor_labels: true
     metrics_path: "/federate"
-    scheme: https
     params:
       "match[]":
-        - '{job="Dwellir"}'
+        - '{job="Dwellir", __name__=~".*substrate_rpc_calls_sta.*"}'
+    scheme: https
+    tls_config:
+            insecure_skip_verify: true
     static_configs:
       - targets: ['rpc-monitoring-se1.dwellir.com']
       - targets: ['rpc-monitoring-se2.dwellir.com']
       - targets: ['rpc-monitoring-tn.dwellir.com']
-# Job Blockops        
   - job_name: "blockops"
     scrape_interval: 15s
     honor_labels: true
     metrics_path: "/federate"
     params:
       "match[]":
-        - '{job="blockops"}'
+        - '{job="blockops", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets:
         - blockops-rpc-prometheus.blockops.network:443
     scheme: https
-# onfinality
+  - job_name: "RadiumBlock"
+    scrape_interval: 15s
+    honor_labels: true
+    static_configs:
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /polkadot
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /bridgehub-polkadot
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /kusama
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /statemine
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /statemint
+  # onfinality
   - job_name: "onfinality"
     scrape_interval: 15s
     honor_labels: true
     metrics_path: "/federate"
     scheme: https
+    tls_config:
+      insecure_skip_verify: true
     params:
       "match[]":
-        - '{job="onfinality"}'
+        - '{job="onfinality", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets: ['rpc-prometheus-eu.onfinality.io']
       - targets: ['rpc-prometheus-hm.onfinality.io']
       - targets: ['rpc-prometheus-nv.onfinality.io']
+  # simplystaking
+  - job_name: "Simply Staking"
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: "/federate"
+    params:
+      "match[]":
+        - '{job="Simply Staking", __name__=~".*substrate_rpc_calls_sta.*"}'
+    static_configs:
+      - targets: ['50.21.167.187:9090']
