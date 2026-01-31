@@ -70,17 +70,6 @@ scrape_configs:
             insecure_skip_verify: true
     static_configs:
       - targets: ['rpc-monitoring.dwellir.com']
-  - job_name: "blockops"
-    scrape_interval: 15s
-    honor_labels: true
-    metrics_path: "/federate"
-    params:
-      "match[]":
-        - '{job="blockops", __name__=~".*substrate_rpc_calls_sta.*"}'
-    static_configs:
-      - targets:
-        - blockops-rpc-prometheus.blockops.network:443
-    scheme: https
   - job_name: "RadiumBlock"
     scrape_interval: 15s
     honor_labels: true
