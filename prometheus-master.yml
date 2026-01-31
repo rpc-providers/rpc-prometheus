@@ -107,6 +107,30 @@ scrape_configs:
         - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
         labels:
           __metrics_path__: /statemint
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /bridgehub-kusama
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /collectives
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /people-polkadot
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /people-kusama
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /coretime-polkadot
+      - targets:
+        - "polkadot-public-rpc.prometheus.radiumblock.co:80"   
+        labels:
+          __metrics_path__: /westend    
   # onfinality
   - job_name: "onfinality"
     scrape_interval: 15s
