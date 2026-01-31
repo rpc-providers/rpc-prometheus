@@ -69,9 +69,7 @@ scrape_configs:
     tls_config:
             insecure_skip_verify: true
     static_configs:
-      - targets: ['rpc-monitoring-se1.dwellir.com']
-      - targets: ['rpc-monitoring-se2.dwellir.com']
-      - targets: ['rpc-monitoring-tn.dwellir.com']
+      - targets: ['rpc-monitoring.dwellir.com']
   - job_name: "blockops"
     scrape_interval: 15s
     honor_labels: true
