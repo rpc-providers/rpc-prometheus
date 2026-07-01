@@ -95,3 +95,14 @@ scrape_configs:
         - '{job="Simply Staking", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets: ['50.21.167.187:9090']
+  # LinkPool
+  - job_name: "LinkPool"
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: "/federate"
+    scheme: https
+    params:
+      "match[]":
+        - '{job="LinkPool", __name__=~".*substrate_rpc_calls_sta.*"}'
+    static_configs:
+      - targets: ['polkadot-metrics.linkpool.com']
