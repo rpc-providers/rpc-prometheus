@@ -106,3 +106,19 @@ scrape_configs:
         - '{job="LinkPool", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets: ['polkadot-metrics.linkpool.com']
+  # Rotko
+  - job_name: "Rotko"
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: "/federate"
+    scheme: https
+    params:
+      "match[]":
+        - '{job="substrate", __name__=~".*substrate_rpc_calls_sta.*"}'
+    static_configs:
+      - targets: ['ibp-metrics.rotko.net']
+    metric_relabel_configs:
+      - source_labels: [member]
+        regex: rotko
+        target_label: job
+        replacement: Rotko
