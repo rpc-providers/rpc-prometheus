@@ -122,3 +122,14 @@ scrape_configs:
         regex: rotko
         target_label: job
         replacement: Rotko
+  # INTERWEB
+  - job_name: "interweb"
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: "/federate"
+    scheme: https
+    params:
+      "match[]":
+        - '{job="interweb", __name__=~".*substrate_rpc_calls_sta.*"}'
+    static_configs:
+      - targets: ['prometheus.interweb-it.com']
