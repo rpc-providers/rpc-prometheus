@@ -133,3 +133,14 @@ scrape_configs:
         - '{job="interweb", __name__=~".*substrate_rpc_calls_sta.*"}'
     static_configs:
       - targets: ['prometheus.interweb-it.com']
+  # Gatotech
+  - job_name: "gatotech"
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: "/federate"
+    scheme: https
+    params:
+      "match[]":
+        - '{job="gatotech", __name__=~".*substrate_rpc_calls_sta.*"}'
+    static_configs:
+      - targets: ['federate.gatotech.network']
